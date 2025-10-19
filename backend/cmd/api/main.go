@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -29,11 +30,29 @@ func main() {
 	router := gin.Default()
 
 	// Configure CORS from config
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{cfg.FrontendURL}
-	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
-	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Authorization"}
-	corsConfig.AllowCredentials = true
+	corsConfig := cors.Config{
+		AllowOriginFunc: func(origin string) bool {
+			// Allow configured frontend URL (production)
+			if origin == cfg.FrontendURL {
+				return true
+			}
+			// Allow localhost for development
+			if origin == "http://localhost:5173" || origin == "http://localhost:3000" {
+				return true
+			}
+			// Allow Vercel deployments (*.vercel.app)
+			if strings.HasSuffix(origin, ".vercel.app") {
+				return true
+			}
+			// Log rejected origins to help debug CORS issues
+			log.Printf("CORS: Rejected origin: %s (configured frontend: %s)", origin, cfg.FrontendURL)
+			return false
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		MaxAge:           12 * 3600, // 12 hours
+	}
 	router.Use(cors.New(corsConfig))
 
 	// Health check endpoint

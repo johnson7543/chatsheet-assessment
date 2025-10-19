@@ -156,7 +156,9 @@ railway init
 railway up
 ```
 
-**Note:** The project includes `railway.toml` which configures Railway to use the Dockerfile with CGO enabled for SQLite support. If you encounter CGO-related errors, ensure this file is committed to your repository.
+**Notes:** 
+- The project includes `railway.toml` which configures Railway to use the Dockerfile with CGO enabled for SQLite support. If you encounter CGO-related errors, ensure this file is committed to your repository.
+- The backend CORS is configured to allow requests from Vercel deployments (`*.vercel.app`), localhost, and the configured `FRONTEND_URL`. Make sure to set `FRONTEND_URL` to your production Vercel domain.
 
 #### Option 2: Render
 
@@ -259,8 +261,10 @@ cd frontend
 vercel
 ```
 
-4. Set environment variable:
-   - `VITE_API_URL=<your-backend-url>`
+4. Set environment variable in Vercel dashboard:
+   - `VITE_API_URL=<your-backend-url>` (e.g., `https://your-backend.up.railway.app`)
+
+**Note:** The backend is pre-configured to accept requests from all Vercel deployments (`*.vercel.app`), so CORS will work automatically. For production, also set the `FRONTEND_URL` environment variable in your backend to your Vercel production domain.
 
 #### Option 2: Netlify
 
