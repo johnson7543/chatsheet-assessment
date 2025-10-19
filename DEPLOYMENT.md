@@ -156,6 +156,8 @@ railway init
 railway up
 ```
 
+**Note:** The project includes `railway.toml` which configures Railway to use the Dockerfile with CGO enabled for SQLite support. If you encounter CGO-related errors, ensure this file is committed to your repository.
+
 #### Option 2: Render
 
 1. Create account at [render.com](https://render.com)

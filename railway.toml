@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.backend"
+
+[deploy]
+startCommand = "./linkedin-connector"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+

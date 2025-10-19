@@ -1,0 +1,14 @@
+[variables]
+CGO_ENABLED = "1"
+
+[phases.setup]
+nixPkgs = ["gcc", "pkg-config", "sqlite"]
+
+[phases.build]
+cmds = [
+  "cd backend && go build -tags 'sqlite_json' -o linkedin-connector cmd/api/main.go"
+]
+
+[start]
+cmd = "./backend/linkedin-connector"
+
