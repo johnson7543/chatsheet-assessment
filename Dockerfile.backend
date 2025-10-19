@@ -27,6 +27,9 @@ RUN apk --no-cache add ca-certificates sqlite-libs
 # Copy the binary from builder
 COPY --from=builder /app/linkedin-connector .
 
+# Copy configs directory from builder
+COPY --from=builder /app/configs ./configs
+
 # Create directory for database
 RUN mkdir -p /app/data
 
