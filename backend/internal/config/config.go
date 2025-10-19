@@ -104,6 +104,9 @@ func LoadConfig() error {
 		}
 	}
 
+	// Assign to global App variable
+	App = cfg
+
 	return nil
 }
 
