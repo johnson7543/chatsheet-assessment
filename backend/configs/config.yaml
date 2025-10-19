@@ -1,48 +1,8 @@
-# Application Configuration
-# Non-sensitive settings - commit this to git
-# For secrets, use .env file
-
-app:
-  name: "LinkedIn Connector"
-  version: "1.0.0"
-  environment: "development" # development, staging, production
-
 server:
   port: 8080
-  read_timeout: 15s
-  write_timeout: 15s
-  idle_timeout: 60s
-
-cors:
-  allowed_origins:
-    - "http://localhost:5173"  # Vite dev server
-    - "http://localhost:3000"  # Docker frontend
-  allowed_methods:
-    - "GET"
-    - "POST"
-    - "PUT"
-    - "DELETE"
-    - "OPTIONS"
-  allowed_headers:
-    - "Origin"
-    - "Content-Type"
-    - "Authorization"
-  allow_credentials: true
-
-database:
-  max_open_connections: 25
-  max_idle_connections: 5
-  connection_max_lifetime: 300s  # 5 minutes
-  connection_max_idle_time: 600s # 10 minutes
-
 jwt:
   token_duration: 168h  # 7 days
-
 unipile:
   timeout: 30s
   retry_attempts: 3
   retry_delay: 2s
-
-logging:
-  level: "info"  # debug, info, warn, error
-  format: "json" # json, text
